@@ -13,6 +13,16 @@ public class TestPila{
         p.apilar(2);
         p.apilar(1);
         System.out.println(esCapicua(p));
+        p.vaciar();
+        p.apilar("a");
+        p.apilar("b");
+        p.apilar("a");
+        System.out.println(esCapicua(p));
+        p.desapilar();
+        System.out.println(esCapicua(p));
+        p.apilar("b");
+        p.apilar("a");
+        System.out.println(esCapicua(p));
     }
 
     public static void testClone(){

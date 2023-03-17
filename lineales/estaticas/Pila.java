@@ -42,13 +42,24 @@ public class Pila{
         return this.tope == -1;
     }
 
-    public Pila clone(){
+    public Pila clone1(){
         Pila newPila = new Pila();
         int idx = 0;
         while(idx <= this.tope){
             newPila.apilar(this.arr[idx]);
             idx++;
         }
+        return newPila;
+    }
+
+    public Pila clone(){
+        Pila newPila = new Pila();
+        int idx = 0;
+        while(idx <= this.tope){
+            newPila.arr[idx] = this.arr[idx];
+            idx++;
+        }
+        newPila.tope = this.tope;
         return newPila;
     }
 
@@ -64,9 +75,6 @@ public class Pila{
 
     public void vaciar(){
         this.arr = new Object[SIZE];
-    }
-
-    public int getSize(){
-        return this.SIZE;
+        this.tope = -1;
     }
 }
