@@ -24,8 +24,48 @@ public class TestPila{
         System.out.println("Test apilar/desapilar, obtener tope, esVacia, vaciar " + exitoString);
 
     }
+
+    public static void testClone(){
+        System.out.println("\nTest Clone");
+        boolean exito = true;
+        String exitoString;
+        Pila p = new Pila();
+        for(int i = 0; i<10; i++){
+            p.apilar(i);
+        }
+        exito = exito && testClone1(p);
+        p.vaciar();
+        for(int i = 0; i<100; i++){
+            p.apilar(i);
+        }
+        exito = exito && testClone1(p) ;
+        if(exito)  
+            exitoString = "OK";
+        else
+            exitoString = "FAIL";
+
+        System.out.println("Test Clone " + exitoString);
+    }
+
+    public static boolean testClone1(Pila p){
+        Boolean exito;
+        String ps = p.toString();
+        String psclone = p.clone().toString();
+        exito = ps.equals(psclone);
+        if(!exito){
+            System.out.println(ps);
+            System.out.println(psclone);
+        }
+        System.out.println("test clone true: "+ exito);
+        
+        return exito;
+    }
+
     public static void testCapicua(){
         System.out.println("\nTest capicua");
+        boolean exito = true;
+        String exitoString;
+        boolean casoCapicua;
         Pila p = new Pila();
         for(int i = 0; i < 100; i++){
             p.apilar(i);
@@ -33,7 +73,10 @@ public class TestPila{
         for(int i = 99; i >= 0; i--){
             p.apilar(i);
         }
-        System.out.println("capicua arreglo 200 elem true: " + esCapicua(p));
+        casoCapicua = esCapicua(p);
+        System.out.println("capicua arreglo 200 elem true: " + casoCapicua);
+        exito = exito && casoCapicua;
+
         p.vaciar();
         for(int i = 0; i < 100; i++){
             p.apilar(i);
@@ -42,22 +85,18 @@ public class TestPila{
         for(int i = 99; i >= 0 ; i--){
             p.apilar(i);
         }
-        System.out.println("capicua arreglo 201 elem true: " + esCapicua(p));
+        casoCapicua = esCapicua(p);
+        System.out.println("capicua arreglo 201 elem true: " + casoCapicua);
+        exito = exito && casoCapicua;
         p.apilar(1);
-        System.out.println("capicua arreglo 202 elem false: " + esCapicua(p));
-    }
-
-    public static void testClone(){
-        Pila p = new Pila();
-        for(int i = 0; i<10; i++){
-            p.apilar(i);
-        }
-        System.out.println("\nTest Clone");
-        String ps = p.toString();
-        String psclone = p.clone().toString();
-        System.out.println(ps);
-        System.out.println(psclone);
-        System.out.println("test clone true: "+ ps.equals(psclone));
+        casoCapicua = esCapicua(p);
+        System.out.println("capicua arreglo 202 elem false: " + casoCapicua);
+        exito = exito && !casoCapicua;
+        if(exito)
+            exitoString = "OK";
+        else
+            exitoString = "FAIL";
+        System.out.println("test capicua " + exitoString);
     }
 
     public static boolean esCapicua(Pila p){
