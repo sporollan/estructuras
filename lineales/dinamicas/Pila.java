@@ -34,7 +34,7 @@ public class Pila {
         this.tope = null;
     }
 
-    public Pila clone(){
+    public Pila cloneOld(){
         Pila newPila = new Pila();
         Nodo topeAux = this.tope;
         Nodo newNodoTope = new Nodo(null, null);
@@ -51,7 +51,25 @@ public class Pila {
             topeAux = topeAux.getEnlace();
         }
         return newPila;
+    }
 
+    public Pila clone(){
+        Pila newPila = new Pila();
+        newPila.tope = cloneAux(null, this.tope);
+        return newPila;
+    }
+
+    public Nodo cloneAux(Nodo previo, Nodo original){
+        if(original == null){
+            return null;
+        } else {
+            Nodo newNodo = new Nodo(original.getElem(), null);
+            if (previo != null){
+                previo.setEnlace(newNodo);
+            }
+            cloneAux(newNodo, original.getEnlace());
+            return newNodo;
+        }
     }
 
     @Override
