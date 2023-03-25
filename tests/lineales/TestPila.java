@@ -3,7 +3,11 @@ import lineales.dinamicas.Pila;
 public class TestPila{
     public static void main(String[] args){
         testTDA();
+        long startTime = System.currentTimeMillis();
         testClone();
+        long endTime = System.currentTimeMillis();
+        long totalTime = endTime - startTime;
+        System.out.println("Total time taken: " + totalTime + " millis");
         testCapicua();
 
     }
@@ -30,12 +34,12 @@ public class TestPila{
         boolean exito = true;
         String exitoString;
         Pila p = new Pila();
-        for(int i = 0; i<10; i++){
+        for(int i = 0; i<200; i++){
             p.apilar(i);
         }
         exito = exito && testClone1(p);
         p.vaciar();
-        for(int i = 0; i<100; i++){
+        for(int i = 0; i<5000; i++){
             p.apilar(i);
         }
         exito = exito && testClone1(p) ;
