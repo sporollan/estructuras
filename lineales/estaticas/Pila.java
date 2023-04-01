@@ -1,4 +1,6 @@
 package lineales.estaticas;
+
+
 public class Pila{
     public Object[] arr;
     public int tope;
@@ -11,7 +13,7 @@ public class Pila{
 
     public boolean apilar(Object nuevoElem){
         boolean exito;
-        if (this.tope+1 >= this.SIZE){
+        if (this.tope+1 >= SIZE){
             exito = false;
         } else {
             this.tope++;
