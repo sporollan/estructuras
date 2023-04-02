@@ -18,7 +18,19 @@ public class Cola {
     }
 
     public boolean poner(Object obj){
-        boolean exito = false;
+        boolean exito = true;
+        int frenteAux = this.frente;
+        frenteAux -= 1;
+        if(frenteAux<0)
+            frenteAux += SIZE;
+        if (this.fin == frenteAux){
+            // la cola esta llena, reporta error
+            exito = false;
+        } else {
+            // si hay lugar coloca el elemento al final de la cola
+            this.arreglo[this.fin] = obj;
+            this.fin = (this.fin + 1) % SIZE;
+        }
         return exito;
     }
 
@@ -41,7 +53,7 @@ public class Cola {
     }
 
     public boolean esVacia(){
-        return false;
+        return (this.fin == this.frente);
     }
 
     public void vaciar(){
@@ -54,7 +66,23 @@ public class Cola {
     }
 
     public String toString(){
-        String str = "";
+        String str = "[";
+
+        int head = this.frente;
+        int finAux = this.fin;
+    
+
+        if(this.arreglo[head]!=null){
+            str += this.arreglo[head];
+            head = (head+1)%SIZE;
+        }
+
+        while(head != finAux && this.arreglo[head]!=null){
+            str= str + ", " + this.arreglo[head];
+            head = (head+1)%SIZE;
+        }
+
+        str+="]";
         return str;
     }
 }
