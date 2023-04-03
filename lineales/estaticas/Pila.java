@@ -4,7 +4,7 @@ package lineales.estaticas;
 public class Pila{
     public Object[] arr;
     public int tope;
-    private static final int SIZE=20;
+    private static final int SIZE=10;
 
     public Pila(){
         this.arr = new Object[SIZE];
@@ -44,16 +44,6 @@ public class Pila{
         return this.tope == -1;
     }
 
-    public Pila clone1(){
-        Pila newPila = new Pila();
-        int idx = 0;
-        while(idx <= this.tope){
-            newPila.apilar(this.arr[idx]);
-            idx++;
-        }
-        return newPila;
-    }
-
     public Pila clone(){
         Pila newPila = new Pila();
         int idx = 0;
@@ -66,13 +56,15 @@ public class Pila{
     }
 
     public String toString(){
-        String p="";
-        int idx = 0;
+        String p="[";
+        int idx = 1;
+        if(this.tope>0)
+            p += this.arr[0];
         while(idx <= this.tope){
-            p+=this.arr[idx];
+            p+= ", " + this.arr[idx];
             idx++;
         }
-        return p;
+        return p+"]";
     }
 
     public void vaciar(){
