@@ -1,12 +1,12 @@
 package tests.lineales;
-import lineales.estaticas.Cola;
+import lineales.dinamicas.Cola;
 
 
 public class TestCola {
     public static void main(String[] args){
         Cola c = new Cola();
 
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < 9; i++){
             c.poner(i);
         }
 
