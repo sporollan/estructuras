@@ -1,5 +1,9 @@
 package lineales.dinamicas;
 
+/************* Autores ***********
+    -   Santiago Porollan, Legajo FAI-3200
+*/
+
 public class Pila {
     private Nodo tope;
     public Pila() {

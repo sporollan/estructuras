@@ -1,5 +1,8 @@
 package lineales.estaticas;
 
+/************* Autores ***********
+    -   Santiago Porollan, Legajo FAI-3200
+*/
 
 public class Pila{
     public Object[] arr;
