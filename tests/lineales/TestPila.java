@@ -10,6 +10,14 @@ public class TestPila{
         System.out.println("Total time taken: " + totalTime + " millis");
         testCapicua();
 
+        Pila p = new Pila();
+        for(int i = 0; i<5; i++){
+            p.apilar(i);
+        }
+        System.out.println("[0, 1, 2, 3, 4] ==> " + p.toString());
+        p.vaciar();
+        System.out.println("[] ==> " + p.toString() );
+
     }
 
     public static void testTDA(){

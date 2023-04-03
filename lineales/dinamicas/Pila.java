@@ -18,12 +18,19 @@ public class Pila {
     }
 
     public boolean desapilar(){
-        this.tope = this.tope.getEnlace();
-        return this.tope != null;
+        boolean exito = true;
+        if(this.tope!=null)
+            this.tope = this.tope.getEnlace();
+        else
+            exito = false;
+        return exito;
     }
 
     public Object obtenerTope(){
-        return this.tope.getElem();
+        Object tope = null;
+        if(this.tope != null)
+            tope = this.tope.getElem();
+        return tope;
     }
 
     public boolean esVacia(){
@@ -34,62 +41,40 @@ public class Pila {
         this.tope = null;
     }
 
-    public Pila cloneOld(){
-        Pila newPila = new Pila();
-        Nodo topeAux = this.tope;
-        Nodo newNodoTope = new Nodo(null, null);
-        Nodo newNodo, prevNodo;
-        newNodoTope.setElem(topeAux.getElem());
-        newPila.tope = newNodoTope;
-        prevNodo = newNodoTope;
-        topeAux = topeAux.getEnlace();
-        while(topeAux != null){
-            newNodo = new Nodo(null, null);
-            newNodo.setElem(topeAux.getElem());
-            prevNodo.setEnlace(newNodo);
-            prevNodo = newNodo;
-            topeAux = topeAux.getEnlace();
-        }
-        return newPila;
-    }
-
     public Pila clone(){
         Pila newPila = new Pila();
         newPila.tope = cloneAux(null, this.tope);
         return newPila;
     }
 
-    public Nodo cloneAux(Nodo previo, Nodo original){
-        if(original == null){
-            return null;
-        } else {
+    private Nodo cloneAux(Nodo previo, Nodo original){
+        Nodo ret = null;
+        if(original != null){
             Nodo newNodo = new Nodo(original.getElem(), null);
             if (previo != null){
                 previo.setEnlace(newNodo);
             }
             cloneAux(newNodo, original.getEnlace());
-            return newNodo;
+            ret = newNodo;
         }
+        return ret;
     }
 
     @Override
     public String toString(){
-        String s = "";
+        String s = "[";
+        if (tope != null){
+            s += toStringAux(this.tope);
+        }
+        return s + "]";
+    }
 
-        if (this.tope == null)
-            s = "Pila vacia";
-        else {
-            // se ubica para recorrer la pila
-            Nodo aux = this.tope;
-            s = "[";
-            while (aux != null){
-                // agrega el texto del elem y avanza
-                s += aux.getElem().toString();
-                aux = aux.getEnlace();
-                if (aux != null)
-                    s += ",";
-            }
-            s += "]";
+    private String toStringAux(Nodo n){
+        String s = "";
+        if(n.getEnlace() == null){
+            s += n.getElem();
+        } else {
+            s += toStringAux(n.getEnlace()) + ", " + n.getElem();
         }
         return s;
     }
