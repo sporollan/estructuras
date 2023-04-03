@@ -62,6 +62,11 @@ public class Cola {
 
     public Cola clone(){
         Cola newCola = new Cola();
+        for(int i = 0; i < this.fin; i++){
+            newCola.arreglo[i] = this.arreglo[i];
+        }
+        newCola.fin = this.fin;
+        newCola.frente = this.frente;
         return newCola;
     }
 
