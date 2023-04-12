@@ -9,7 +9,35 @@ public class Lista {
     }
 
     public boolean insertar(Object obj, int pos){
-        return false;
+        boolean exito = false;
+        if(cabecera == null)
+        {
+            cabecera = new Nodo(obj, null);
+            exito = true;
+        }
+        else if (pos == 1)
+        {
+            Nodo aux = cabecera;
+            cabecera = new Nodo(obj, aux);
+            exito = true;
+        } 
+        else
+        {
+            Nodo headAux = cabecera;
+            Nodo aux;
+
+            int index = 2;
+            do{
+                if(pos == index){
+                    aux = new Nodo(obj, headAux.getEnlace());
+                    headAux.setEnlace(aux);
+                    exito = true;
+                }
+                headAux = headAux.getEnlace();
+                index+=1;
+            } while(headAux != null && pos >= index);
+        }
+        return exito;
     }
 
     public boolean eliminar(int pos){
@@ -42,8 +70,15 @@ public class Lista {
 
     @Override
     public String toString(){
-        String s = "";
-        return s;
+        String s = "[";
+        Nodo hAux = cabecera;
+        s += hAux.getElem();
+        hAux = hAux.getEnlace();
+        while(hAux != null){
+            s += ", " + hAux.getElem();
+            hAux = hAux.getEnlace();
+        }
+        return s + "]";
     }
 
 }
