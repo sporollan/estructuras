@@ -41,7 +41,33 @@ public class Lista {
     }
 
     public boolean eliminar(int pos){
-        return false;
+        Boolean exito = false;
+        if(cabecera == null)
+        {
+        }
+        else if (pos == 1)
+        {
+            cabecera = cabecera.getEnlace();
+            exito = true;
+        } 
+        else 
+        {
+            int i = 2;
+            Nodo haux = cabecera.getEnlace();
+            Nodo prev = cabecera;
+            while(haux != null && i <= pos)
+            {
+                if(i == pos)
+                {
+                    prev.setEnlace(haux.getEnlace());
+                    exito = true;
+                }
+                prev = haux;
+                haux = haux.getEnlace();
+                i+=1;
+            }
+        }
+        return exito;
     }
 
     public Object recuperar(int pos){

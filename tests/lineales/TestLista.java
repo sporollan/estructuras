@@ -14,5 +14,10 @@ public class TestLista {
         L.insertar(7, 7);
 
         System.out.println(L.toString());
+
+        L.eliminar(1);
+        L.eliminar(2);
+
+        System.out.println(L.toString());
     }
 }
