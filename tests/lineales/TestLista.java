@@ -11,7 +11,7 @@ public class TestLista {
         L.insertar("0", 1);
         L.insertar("22", 2);
         L.insertar("5", 5);
-        L.insertar(7, 7);
+        L.insertar("7", 7);
 
         System.out.println(L.toString());
 
@@ -19,5 +19,19 @@ public class TestLista {
         L.eliminar(2);
 
         System.out.println(L.toString());
+
+        System.out.println(L.recuperar(1));
+        System.out.println(L.recuperar(3));
+        System.out.println(L.recuperar(5));
+
+        System.out.println(L.localizar("22"));
+        System.out.println(L.localizar("5"));
+        System.out.println(L.localizar("7"));
+
+        System.out.println(L.longitud());
+
+        System.out.println(L.toString());
+        System.out.println(L.clone().toString());
+
     }
 }

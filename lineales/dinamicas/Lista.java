@@ -71,27 +71,60 @@ public class Lista {
     }
 
     public Object recuperar(int pos){
-        return null;
+        Nodo pointer = cabecera;
+        int i = 1;
+        while(pointer != null && i != pos)
+        {
+            pointer = pointer.getEnlace();
+            i++;
+        }
+        return (pointer != null) ? pointer.getElem() : null;
     }
 
     public int localizar(Object obj){
-        return 0;
+        Nodo pointer = cabecera;
+        int i = 1;
+        while(pointer != null && pointer.getElem()!=obj){
+            i++;
+            pointer = pointer.getEnlace();
+        }
+        return (pointer != null) ? i : -1;
     }
 
     public int longitud(){
-        return 0;
+        Nodo pointer = cabecera;
+        int i = 0;
+        while(pointer != null){
+            i++;
+            pointer = pointer.getEnlace();
+        }
+        return i;
     }
 
     public boolean esVacia(){
-        return false;
+        return cabecera != null;
     }
 
     public void vaciar(){
-
+        cabecera = null;
     }
 
     public Lista clone(){
-        return null;
+        Lista nl = new Lista();
+        nl.cabecera = cloneAux(cabecera, null);
+        return nl;
+    }
+
+    private Nodo cloneAux(Nodo n, Nodo previo){
+        Nodo ret = null;
+        if(n != null){
+            Nodo newNodo = new Nodo(n.getElem(), null);
+            if(previo != null)
+                previo.setEnlace(newNodo);
+            cloneAux(n.getEnlace(), newNodo);
+            ret = newNodo;
+        }
+        return ret;
     }
 
     @Override
