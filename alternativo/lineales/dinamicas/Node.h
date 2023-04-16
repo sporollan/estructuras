@@ -13,7 +13,7 @@ class Node
             elem = "";
         }
 
-        Node(Node* next, string elem)
+        Node(string elem, Node* next)
         {
             this->next = next;
             this->elem = elem;

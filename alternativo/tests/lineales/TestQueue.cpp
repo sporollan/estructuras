@@ -1,4 +1,4 @@
-#include "../../lineales/estaticas/Queue.h"
+#include "../../lineales/dinamicas/Queue.h"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -18,5 +18,9 @@ int main()
     cout<<q.toString()<<endl;
     cout<<q.obtener()<<endl;
     cout<<q.clone().toString()<<endl;
+    
+    q.remover();
+
+    cout<<q.toString()<<endl;
 
 }
