@@ -1,79 +1,113 @@
 package jerarquicas;
 
-
 public class ArbolBin {
-    private static final int SIZE = 20;
-    private CeldaBin[] arbol;
-    private int raiz;
-
+    private NodoArbol raiz;
     public ArbolBin()
     {
-        arbol = new CeldaBin[SIZE];
-        for(int i = 0; i < SIZE; i++)
-        {
-            arbol[i] = new CeldaBin(null,2*i+1 , 2*i+2);
-        }
-        raiz = -1;
+        this.raiz = null;
     }
 
-    @Override
-    public String toString()
+    public boolean insertar(Object elem, Object padre, char lado)
     {
-        return toStringAux(0);
-    }
-
-/* */
-    public String toStringAux(int celda){
-        String s = "";
-        if(celda >= SIZE || arbol[celda].getElem() == null)
-            return "";
-        else
-            s += arbol[celda].getElem();
-        return s + " " + arbol[2*celda+1].getElem() + " " + arbol[2*celda+2].getElem() + "\n" + toStringAux(2*celda+1) + toStringAux(2*celda+2);
-    }
-/* */
-
-    public boolean insertar(Object elem, Object padre, char lugar){
         boolean exito = false;
-        if(raiz == -1)
+        if(this.raiz == null)
         {
+            this.raiz = new NodoArbol(elem, null, null);
             exito = true;
-            arbol[0].setElem(elem);
-            raiz = 0;
         } 
-        else 
-        {
-            exito = insertarAux(elem, padre, lugar, 0);
+        else
+        {  
+            exito = insertarAux(this.raiz, padre, elem, lado);
         }
         return exito;
     }
 
-    public boolean insertarAux(Object elem, Object padre, char lugar, int idx){
-        int hijo;
+    private boolean insertarAux(NodoArbol n, Object padre, Object elem, char lado)
+    {
         boolean exito = false;
-        if(padre == arbol[idx].getElem())
+        
+        if(n == null)
         {
-            if(lugar == 'L')
+            // caso base
+        }
+        else if (n.getElem() == padre)
+        {   // caso base
+            // insertar. se inserta si existe el elemento?
+            if(lado == 'L')
             {
-                hijo = 2*idx+1;
+                n.setIzquierdo(new NodoArbol(elem, null, null));
+                exito = true;
+            } else if (lado == 'R')
+            {
+                exito = true;
+                n.setDerecho(new NodoArbol(elem, null, null));
+            }
+        } 
+        else 
+        {
+            // paso inductivo
+            exito = insertarAux(n.getIzquierdo(), padre, elem, lado);
+            if(!exito)
+            {
+                exito = insertarAux(n.getDerecho(), padre, elem, lado);
+            }
+        }
+        return exito;
+    }
+
+    public String toString()
+    {
+        return toStringAux(this.raiz);
+    }
+
+    private String toStringAux(NodoArbol n)
+    {
+        if(n != null)
+        {
+            return n.getElem() + " " + ((n.getIzquierdo()!=null) ? n.getIzquierdo().getElem() : null)+
+            " " + ((n.getDerecho()!=null) ? n.getDerecho().getElem() : null) + "\n" +
+            toStringAux(n.getIzquierdo()) +
+            toStringAux(n.getDerecho());
+        }
+        else
+        {
+            return "";
+        }
+    }
+
+    public ArbolBin clone()
+    {
+        ArbolBin a = new ArbolBin();
+        a.raiz = cloneAux(this.raiz, null, 'n');
+        return a;
+    }
+
+    private NodoArbol cloneAux(NodoArbol r, NodoArbol n, char lado)
+    {
+        if(r != null)
+        {
+            if(n == null)
+            {
+                n = new NodoArbol(r.getElem(), null, null);
             }
             else
             {
-                hijo = 2*idx+2;
+                NodoArbol h = new NodoArbol(r.getElem(), null, null);
+                if(lado == 'L')
+                {
+                    n.setIzquierdo(h);
+                }
+                else if (lado == 'R')
+                {
+                    n.setDerecho(h);
+                }
+                n = h;
             }
-
-            if(!arbol[hijo].enUso())
-            {
-                exito = true;
-                arbol[hijo].setElem(elem);
-            }
-        } 
-        else 
-        {
-            exito = insertarAux(elem, padre, lugar, 2*idx+1);
-            if(!exito)
-                exito = insertarAux(elem, padre, lugar, 2*idx+2);
+            cloneAux(r.getIzquierdo(), n, 'L');
+            cloneAux(r.getDerecho(), n, 'R');
+            return n;
         }
-        return exito;
+        return null;
+
     }
 }

@@ -11,6 +11,7 @@ public class TestArbolBin {
         a.insertar("3", "1", 'R');
 
         System.out.println(a.toString());
+        System.out.println(a.clone().toString());
 
         }
 }
