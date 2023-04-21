@@ -1,5 +1,7 @@
 package jerarquicas;
 
+import lineales.dinamicas.Lista;
+
 public class ArbolBin {
     private NodoArbol raiz;
     public ArbolBin()
@@ -180,5 +182,30 @@ public class ArbolBin {
             return n;
         }
         return null;
+    }
+
+    public Lista listarPreorden()
+    {
+        Lista l = new Lista();
+        listarPreordenAux(l, this.raiz, 1);
+        return l;
+    }
+
+    private void listarPreordenAux(Lista l, NodoArbol r, int i)
+    {
+        if(r != null)
+        {
+            l.insertar(r.getElem(), i);
+            if(r.getIzquierdo() != null)
+            {
+                i += 1;
+                listarPreordenAux(l, r.getIzquierdo(), i);
+            }
+            if (r.getDerecho() != null)
+            {
+                i += 1;
+                listarPreordenAux(l, r.getDerecho(), i);
+            }
+        }
     }
 }

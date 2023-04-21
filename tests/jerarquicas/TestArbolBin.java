@@ -1,5 +1,6 @@
 package tests.jerarquicas;
 import jerarquicas.ArbolBin;
+import lineales.dinamicas.Lista;
 
 
 public class TestArbolBin {
@@ -24,6 +25,9 @@ public class TestArbolBin {
         System.out.println(a.clone().toString());
         System.out.println(a.padre("6"));
         System.out.println(a.altura());
+        
+        Lista l = a.listarPreorden();
+        System.out.println(l.toString());
 
         }
 }
