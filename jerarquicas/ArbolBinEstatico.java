@@ -1,12 +1,12 @@
 package jerarquicas;
 
 
-public class ArbolBin {
+public class ArbolBinEstatico {
     private static final int SIZE = 20;
     private CeldaBin[] arbol;
     private int raiz;
 
-    public ArbolBin()
+    public ArbolBinEstatico()
     {
         arbol = new CeldaBin[SIZE];
         for(int i = 0; i < SIZE; i++)
@@ -77,9 +77,9 @@ public class ArbolBin {
         return exito;
     }
 
-    public ArbolBin clone()
+    public ArbolBinEstatico clone()
     {
-        ArbolBin a = new ArbolBin();
+        ArbolBinEstatico a = new ArbolBinEstatico();
         for(int i = 0; i < arbol.length; i++)
         {
             a.arbol[i] = arbol[i];
