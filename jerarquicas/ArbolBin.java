@@ -55,6 +55,49 @@ public class ArbolBin {
         return exito;
     }
 
+    public boolean esVacio()
+    {
+        return this.raiz == null;
+    }
+
+    public Object padre(Object elem)
+    {
+        return padreAux(elem, null, null);
+    }
+
+    public Object padreAux(Object elem, NodoArbol p, NodoArbol h)
+    {
+        Object elemp = null;
+        if(h != null)
+        {      
+            if(h.getElem() == elem)
+            {
+                elemp = p.getElem();
+            }
+            else
+            {
+                elemp = padreAux(elem, h, h.getIzquierdo());
+                if(elemp == null)
+                {
+                    elemp = padreAux(elem, h, h.getDerecho());
+                }
+            }
+            
+        }
+        else
+        {
+            if(p == null)
+            {
+                elemp = padreAux(elem, this.raiz, this.raiz.getIzquierdo());
+                if(elemp == null)
+                {
+                    elemp = padreAux(elem, this.raiz, this.raiz.getDerecho());
+                }
+            }
+        }
+        return elemp;
+    }
+
     public String toString()
     {
         return toStringAux(this.raiz);
