@@ -118,6 +118,35 @@ public class ArbolBin {
         }
     }
 
+    public int altura()
+    {
+        if(raiz == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return alturaAux(this.raiz, -1);
+        }
+    }
+    public int alturaAux(NodoArbol r, int a)
+    {
+        int der = 0;
+        int izq = 0;
+
+        if(r != null)
+        {
+            a += 1;
+            der = alturaAux(r.getDerecho(), a);
+            izq = alturaAux(r.getIzquierdo(), a);
+        }
+        else
+        {
+            return a;
+        }
+        return (izq > der) ? izq:der;
+    }
+
     public ArbolBin clone()
     {
         ArbolBin a = new ArbolBin();
@@ -151,6 +180,5 @@ public class ArbolBin {
             return n;
         }
         return null;
-
     }
 }

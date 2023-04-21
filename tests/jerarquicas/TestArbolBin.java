@@ -16,11 +16,14 @@ public class TestArbolBin {
 
         a.insertar("4", "3", 'L');
         a.insertar("5", "3", 'R');
+
         a.insertar("6", "5", 'R');
+        a.insertar("7", "6", 'R');
 
         System.out.println(a.toString());
         System.out.println(a.clone().toString());
         System.out.println(a.padre("6"));
+        System.out.println(a.altura());
 
         }
 }
