@@ -1,5 +1,6 @@
 package jerarquicas;
 
+
 import lineales.dinamicas.Lista;
 
 public class ArbolBin {
@@ -191,20 +192,127 @@ public class ArbolBin {
         return l;
     }
 
-    private void listarPreordenAux(Lista l, NodoArbol r, int i)
+    private int listarPreordenAux(Lista l, NodoArbol r, int i)
     {
         if(r != null)
         {
-            l.insertar(r.getElem(), i);
+            l.insertar(r.getElem(), l.longitud()+1);
+            i+=1;
             if(r.getIzquierdo() != null)
             {
-                i += 1;
-                listarPreordenAux(l, r.getIzquierdo(), i);
+                i = listarPreordenAux(l, r.getIzquierdo(), i);
+
             }
             if (r.getDerecho() != null)
             {
-                i += 1;
-                listarPreordenAux(l, r.getDerecho(), i);
+                i = listarPreordenAux(l, r.getDerecho(), i);
+            }
+        }
+        return i;
+    }
+
+    public Lista listarInorden()
+    {
+        Lista l = new Lista();
+        listarInordenAux(l, this.raiz, 1);
+        return l;
+    }
+
+    private int listarInordenAux(Lista l, NodoArbol r, int i)
+    {
+        if(r != null)
+        {
+            if(r.getIzquierdo() != null){
+                i = listarInordenAux(l, r.getIzquierdo(), i);
+            }
+            l.insertar(r.getElem(), i);
+            i+=1;
+            if(r.getDerecho() != null)
+            {
+                i = listarInordenAux(l, r.getDerecho(), i);
+            }
+        }
+        return i;
+    }
+
+    public Lista listarPosorden()
+    {
+        Lista l = new Lista();
+        listarPosordenAux(l, this.raiz, 1);
+        return l;
+    }
+
+    private int listarPosordenAux(Lista l, NodoArbol r, int i)
+    {
+        if(r != null)
+        {
+            if(r.getIzquierdo() != null){
+                i = listarPosordenAux(l, r.getIzquierdo(), i);
+            }
+
+            if(r.getDerecho() != null)
+            {
+                i = listarPosordenAux(l, r.getDerecho(), i);
+            }
+            l.insertar(r.getElem(), i);
+            i+=1;
+        }
+        return i;
+    }
+
+    public Lista listarNiveles()
+    {
+        Lista ll = new Lista();
+        Lista l = new Lista();
+        Lista laux;
+        int k = 1;
+
+        listarNivelesAux(ll, this.raiz, 0);
+
+        for(int i = 1; i <= ll.longitud(); i++)
+        {
+            // unir todas las listas de ll donde
+            // cada indice es una lista con todos 
+            // los elementos de un nivel
+            laux = (Lista)ll.recuperar(i);
+            for(int j = 1; j <= laux.longitud(); j++)
+            {
+                l.insertar(laux.recuperar(j),k);
+                k+=1;
+            }
+        }
+        return l;
+    }
+
+    private void listarNivelesAux(Lista l, NodoArbol r, int nivel)
+    {
+        Lista laux;
+        if( r != null)
+        {
+            if(nivel >= l.longitud())
+            {
+                // agregar nivel nuevo a la lista
+                laux = new Lista();
+                laux.insertar(r.getElem(), laux.longitud()+1);
+                l.insertar(laux, nivel+1);
+            }
+            else
+            {
+                // insertar elemento en su lista nivel
+                laux = (Lista)l.recuperar(nivel+1);
+                l.eliminar(nivel+1);
+                laux.insertar(r.getElem(), laux.longitud() + 1);
+                l.insertar(laux, nivel+1);
+            }
+            
+            // seguir recorriendo en preorden
+            if(r.getIzquierdo() != null)
+            {
+                listarNivelesAux(l, r.getIzquierdo(), nivel+1);
+            }
+            if(r.getDerecho() != null)
+            {
+                listarNivelesAux(l, r.getDerecho(), nivel+1);
             }
         }
     }
