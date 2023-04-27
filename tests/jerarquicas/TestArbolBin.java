@@ -42,5 +42,8 @@ public class TestArbolBin {
 
         System.out.println("frontera " + a.frontera().toString());
 
+        System.out.println("ancestros " + a.obtenerAncestros("H").toString());
+
+
         }
 }

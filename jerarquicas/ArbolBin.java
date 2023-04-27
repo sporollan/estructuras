@@ -36,6 +36,45 @@ public class ArbolBin {
         }
     }
 
+    public Lista obtenerAncestros(Object elem)
+    {
+        Lista l = new Lista();
+        obtenerAncestrosAux(l, this.raiz, elem);
+        return l;
+    }
+
+    public boolean obtenerAncestrosAux(Lista l, NodoArbol r, Object elem)
+    {
+        boolean encontrado = false;
+        if(r != null)
+        {
+            if(r.getElem() != elem)
+            {
+                encontrado = obtenerAncestrosAux(l, r.getIzquierdo(), elem);
+                if(encontrado)
+                {
+                    l.insertar(r.getElem(), 1);
+                }
+                else
+                {
+                    encontrado = obtenerAncestrosAux(l, r.getDerecho(), elem);
+                    if(encontrado)
+                    {
+                        l.insertar(r.getElem(), 1);
+                    }
+                }
+
+            }
+            else
+            {
+                return true;
+            }
+        }
+        return encontrado;
+    }
+
+
+
     public boolean insertar(Object elem, Object padre, char lado)
     {
         boolean exito = false;
