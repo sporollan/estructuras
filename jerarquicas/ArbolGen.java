@@ -61,18 +61,63 @@ public class ArbolGen {
 
     public boolean pertenece(Object elem)
     {
-        boolean pert = false;
-        return pert;
+        return perteneceAux(elem, this.raiz);
+    }
+
+    private boolean perteneceAux(Object elem, NodoGen r)
+    {
+        boolean p = false;
+        if(r != null)
+        {
+            if(r.getElem() == elem)
+            {
+                p = true;
+            }
+            else
+            {
+                p = perteneceAux(elem, r.getHijoIzquierdo());
+                if(!p)
+                {
+                    p = perteneceAux(elem, r.getHermanoDerecho());
+                }
+            }
+        }
+        return p;
     }
 
     public boolean esVacio()
     {
-        return true;
+        return this.raiz == null;
     }
 
     public Object padre(Object elem)
     {
-        return new Object();
+        return padreAux(elem, this.raiz);
+    }
+    private Object padreAux(Object elem, NodoGen r)
+    {
+        Object obj = null;
+        if(r != null)
+        {
+            NodoGen h = r.getHijoIzquierdo();
+            while(h != null && obj == null)
+            {
+                if(h.getElem() == elem)
+                {
+                    obj = r.getElem();
+                }
+                h = h.getHermanoDerecho();
+            }
+            if(obj == null)
+            {
+                obj = padreAux(elem, r.getHijoIzquierdo());
+            }
+            if(obj == null)
+            {
+                obj = padreAux(elem, r.getHermanoDerecho());
+            }
+        }
+        return obj;
     }
 
     public int altura()
@@ -123,12 +168,12 @@ public class ArbolGen {
 
     public String toString()
     {
-        String s = "[\n";
+        String s = "";
         if(this.raiz != null)
         {
             s = s + toStringAux(this.raiz);
         }
-        return s + "\n]";
+        return s;
     }
 
     private String toStringAux(NodoGen r)

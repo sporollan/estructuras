@@ -38,6 +38,10 @@ public class TestArbolGen {
         a.insertar("S", "E");
 
         System.out.println(a.toString());
+        System.out.println((a.pertenece("Q")?"Q pertenece":"Q no pertenece"));
+        System.out.println((a.pertenece("Z")?"Z pertenece":"Z no pertenece"));
+        System.out.println("padre de M: " + a.padre("M"));
+
 
 
 
