@@ -40,5 +40,7 @@ public class TestArbolBin {
         l = a.listarNiveles();
         System.out.println("niveles " + l.toString());
 
+        System.out.println("frontera " + a.frontera().toString());
+
         }
 }

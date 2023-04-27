@@ -10,6 +10,32 @@ public class ArbolBin {
         this.raiz = null;
     }
 
+    public Lista frontera()
+    {
+        Lista l = new Lista();
+        fronteraAux(l, this.raiz);
+        return l;
+    }
+
+    private void fronteraAux(Lista l, NodoArbol r)
+    {
+        if(r != null)
+        {
+            if(r.getDerecho() == null && r.getIzquierdo() == null)
+            {
+                l.insertar(r.getElem(), l.longitud()+1);
+            }
+            if(r.getIzquierdo()!=null)
+            {
+                fronteraAux(l, r.getIzquierdo());
+            }
+            if(r.getDerecho()!=null)
+            {
+                fronteraAux(l, r.getDerecho());
+            }
+        }
+    }
+
     public boolean insertar(Object elem, Object padre, char lado)
     {
         boolean exito = false;
