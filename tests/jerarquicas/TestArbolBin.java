@@ -44,6 +44,7 @@ public class TestArbolBin {
 
         System.out.println("ancestros " + a.obtenerAncestros("H").toString());
 
+        System.out.println("descendientes " + a.obtenerDescendientes("C").toString());
 
         }
 }

@@ -43,7 +43,7 @@ public class ArbolBin {
         return l;
     }
 
-    public boolean obtenerAncestrosAux(Lista l, NodoArbol r, Object elem)
+    private boolean obtenerAncestrosAux(Lista l, NodoArbol r, Object elem)
     {
         boolean encontrado = false;
         if(r != null)
@@ -73,7 +73,29 @@ public class ArbolBin {
         return encontrado;
     }
 
+    public Lista obtenerDescendientes(Object elem)
+    {
+        Lista l = new Lista();
+        obtenerDescendientesAux(l, this.raiz, elem, false);
+        return l;
+    }
 
+    private void obtenerDescendientesAux(Lista l, NodoArbol r, Object elem, boolean encontrado)
+    {
+        if(r != null)
+        {
+            if(!encontrado)
+            {
+                encontrado = r.getElem() == elem;
+            }
+            else
+            {
+                l.insertar(r.getElem(), 1);
+            }
+            obtenerDescendientesAux(l, r.getIzquierdo(), elem, encontrado);
+            obtenerDescendientesAux(l, r.getDerecho(), elem, encontrado);
+        }
+    }
 
     public boolean insertar(Object elem, Object padre, char lado)
     {
