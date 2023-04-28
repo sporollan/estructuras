@@ -122,7 +122,25 @@ public class ArbolGen {
 
     public int altura()
     {
-        int a = 0;
+        return alturaAux(this.raiz, -1);
+    }
+
+    private int alturaAux(NodoGen r, int a)
+    {
+        if(r != null)
+        {
+            a = a + 1;
+            int max = a;
+            int aHijo;
+            NodoGen hijo = r.getHijoIzquierdo();
+            while(hijo != null)
+            {
+                aHijo = alturaAux(hijo, a);
+                max = (aHijo > max) ? aHijo : max;
+                hijo = hijo.getHermanoDerecho();
+            }
+            a = max;
+        }
         return a;
     }
 

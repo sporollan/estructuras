@@ -43,6 +43,16 @@ public class TestArbolGen {
         System.out.println("padre de M: " + a.padre("M"));
 
 
+        System.out.println("altura: " + a.altura());
+        a.insertar("T", "S");
+        System.out.println("altura: " + a.altura());
+        a.insertar("U", "T");
+        System.out.println("altura: " + a.altura());
+
+
+
+
+
 
 
 
