@@ -37,7 +37,6 @@ public class TestArbolGen {
         a.insertar("R", "E");
         a.insertar("S", "E");
 
-        System.out.println(a.toString());
         System.out.println((a.pertenece("Q")?"Q pertenece":"Q no pertenece"));
         System.out.println((a.pertenece("Z")?"Z pertenece":"Z no pertenece"));
         System.out.println("padre de M: " + a.padre("M"));
@@ -48,6 +47,15 @@ public class TestArbolGen {
         System.out.println("altura: " + a.altura());
         a.insertar("U", "T");
         System.out.println("altura: " + a.altura());
+
+        System.out.println("nivel S: " + a.nivel("S"));
+        System.out.println("nivel A: " + a.nivel("A"));
+        System.out.println("nivel C: " + a.nivel("C"));
+        System.out.println("nivel U: " + a.nivel("U"));
+
+        System.out.println(a.toString());
+
+
 
 
 

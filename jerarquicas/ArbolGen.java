@@ -146,7 +146,30 @@ public class ArbolGen {
 
     public int nivel(Object elem)
     {
-        return 0;
+        return nivelAux(0, elem, raiz);
+    }
+
+    private int nivelAux(int a, Object elem, NodoGen r)
+    {
+        int b = -1;
+        if(r != null)
+        {
+
+            if(r.getElem() == elem)
+            {   
+                b = a;
+            }
+            else
+            {
+                NodoGen hijo = r.getHijoIzquierdo();
+                while(hijo != null && b == -1)
+                {
+                    b = nivelAux(a+1, elem, hijo);
+                    hijo = hijo.getHermanoDerecho();
+                }
+            }
+        }
+        return b;
     }
 
     public Lista ancestros(Object elem)
