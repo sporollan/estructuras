@@ -1,4 +1,4 @@
-package jerarquicas;
+package jerarquicas.dinamicas;
 
 
 import lineales.dinamicas.Lista;
@@ -123,15 +123,23 @@ public class ArbolBin {
         else if (n.getElem() == padre)
         {   // caso base
             // insertar. se inserta si existe el elemento?
-            if(lado == 'L')
+            if(lado == 'I')
             {
-                n.setIzquierdo(new NodoArbol(elem, null, null));
-                exito = true;
-            } else if (lado == 'R')
+                if(n.getIzquierdo() == null)
+                {
+                    n.setIzquierdo(new NodoArbol(elem, null, null));
+                
+                    exito = true;
+                }
+            } else if (lado == 'D')
             {
+                if(n.getDerecho() == null)
+                {
                 exito = true;
                 n.setDerecho(new NodoArbol(elem, null, null));
+                }
             }
+
         } 
         else 
         {
@@ -145,6 +153,11 @@ public class ArbolBin {
         return exito;
     }
 
+    public void vaciar()
+    {
+        this.raiz = null;
+    }
+
     public boolean esVacio()
     {
         return this.raiz == null;
@@ -152,7 +165,11 @@ public class ArbolBin {
 
     public Object padre(Object elem)
     {
-        return padreAux(elem, null, null);
+        Object p = null;
+        if(this.raiz != null && elem != this.raiz.getElem()){
+            p = padreAux(elem, null, null);
+        }
+        return p;
     }
 
     public Object padreAux(Object elem, NodoArbol p, NodoArbol h)
@@ -255,18 +272,18 @@ public class ArbolBin {
             else
             {
                 NodoArbol h = new NodoArbol(r.getElem(), null, null);
-                if(lado == 'L')
+                if(lado == 'I')
                 {
                     n.setIzquierdo(h);
                 }
-                else if (lado == 'R')
+                else if (lado == 'D')
                 {
                     n.setDerecho(h);
                 }
                 n = h;
             }
-            cloneAux(r.getIzquierdo(), n, 'L');
-            cloneAux(r.getDerecho(), n, 'R');
+            cloneAux(r.getIzquierdo(), n, 'I');
+            cloneAux(r.getDerecho(), n, 'D');
             return n;
         }
         return null;
@@ -345,6 +362,31 @@ public class ArbolBin {
             i+=1;
         }
         return i;
+    }
+
+    public int nivel(Object elem)
+    {
+
+        return nivelAux(0, elem, this.raiz);
+    }
+
+    public int nivelAux(int n, Object elem, NodoArbol r)
+    {
+        int a = -1;
+        if(r != null)
+        {
+            if(r.getElem() == elem)
+                a = n;
+            else
+            {
+                a = nivelAux(n+1, elem, r.getIzquierdo());
+                if(a == -1)
+                {
+                    a = nivelAux(n+1, elem, r.getDerecho());
+                }
+            }
+        }
+        return a;
     }
 
     public Lista listarNiveles()
