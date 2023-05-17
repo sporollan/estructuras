@@ -1,5 +1,5 @@
 package tests.jerarquicas;
-import jerarquicas.ArbolGen;
+import jerarquicas.dinamicas.ArbolGen;
 
 
 public class TestArbolGen {
@@ -54,6 +54,8 @@ public class TestArbolGen {
         System.out.println("nivel U: " + a.nivel("U"));
 
         System.out.println(a.toString());
+
+        System.out.println("ancestros U: " + a.ancestros("U"));
 
 
 

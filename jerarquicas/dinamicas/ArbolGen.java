@@ -174,7 +174,36 @@ public class ArbolGen {
 
     public Lista ancestros(Object elem)
     {
-        return new Lista();
+        Lista L = new Lista();
+        ancestrosAux(L, elem, this.raiz);
+        return L;
+    }
+
+    public boolean ancestrosAux(Lista L, Object elem, NodoGen r)
+    {
+        boolean encontrado = false;
+        if(r != null)
+        {
+            if(r.getElem() == elem)
+            {
+                L.insertar(elem, 1);
+                encontrado = true;
+            }
+            else
+            {
+                NodoGen h = r.getHijoIzquierdo();
+                while(h != null && !encontrado)
+                {
+                    encontrado = ancestrosAux(L, elem, h);
+                    h = h.getHermanoDerecho();
+                }
+                if(encontrado)
+                {
+                    L.insertar(r.getElem(), 1);
+                }
+            }
+        }
+        return encontrado;
     }
 
     public ArbolGen clone()
@@ -184,7 +213,7 @@ public class ArbolGen {
 
     public void vaciar()
     {
-
+        this.raiz = null;
     }
 
     public Lista listarPreorden()
