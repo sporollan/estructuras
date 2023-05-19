@@ -1,5 +1,6 @@
 package jerarquicas.dinamicas;
 import lineales.dinamicas.Lista;
+import lineales.dinamicas.Cola;
 
 
 public class ArbolGen {
@@ -208,32 +209,98 @@ public class ArbolGen {
 
     public ArbolGen clone()
     {
-        return new ArbolGen();
+        ArbolGen a = new ArbolGen();
+        a.raiz = this.cloneAux(this.raiz);
+        return a;
     }
 
+    private NodoGen cloneAux(NodoGen r) {
+    NodoGen clone = null;
+    if (r != null) {
+        clone = new NodoGen(r.getElem(), null, null);
+        NodoGen hijo = r.getHijoIzquierdo();
+        if (hijo != null) {
+            clone.setHijoIzquierdo(cloneAux(hijo));
+        }
+        clone.setHermanoDerecho(cloneAux(r.getHermanoDerecho()));
+    }
+    return clone;
+}
     public void vaciar()
     {
         this.raiz = null;
     }
 
-    public Lista listarPreorden()
-    {
-        return new Lista();
+    public Lista listarPreorden() {
+        Lista lista = new Lista();
+        listarPreordenAux(this.raiz, lista);
+        return lista;
     }
 
-    public Lista listarInorden()
-    {
-        return new Lista();
+    private void listarPreordenAux(NodoGen r, Lista lista) {
+        if (r != null) {
+            lista.insertar(r.getElem(), lista.longitud() + 1); // Add current element to the list
+            NodoGen hijo = r.getHijoIzquierdo();
+            while (hijo != null) {
+                listarPreordenAux(hijo, lista); // Recursively traverse and add elements of the subtree
+                hijo = hijo.getHermanoDerecho();
+            }
+        }
     }
 
-    public Lista listarPosorden()
-    {
-        return new Lista();
+    public Lista listarInorden() {
+        Lista lista = new Lista();
+        listarInordenAux(this.raiz, lista);
+        return lista;
     }
 
-    public Lista listarPorNiveles()
-    {
-        return new Lista();
+    private void listarInordenAux(NodoGen r, Lista lista) {
+        if (r != null) {
+            NodoGen hijo = r.getHijoIzquierdo();
+            while (hijo != null) {
+                listarInordenAux(hijo, lista); // Recursively traverse and add elements of the left subtree
+                hijo = hijo.getHermanoDerecho();
+            }
+            lista.insertar(r.getElem(), lista.longitud() + 1); // Add current element to the list
+        }
+    }
+
+    public Lista listarPosorden() {
+        Lista lista = new Lista();
+        listarPosordenAux(this.raiz, lista);
+        return lista;
+    }
+
+    private void listarPosordenAux(NodoGen r, Lista lista) {
+        if (r != null) {
+            NodoGen hijo = r.getHijoIzquierdo();
+            while (hijo != null) {
+                listarPosordenAux(hijo, lista); // Recursively traverse and add elements of the subtree
+                hijo = hijo.getHermanoDerecho();
+            }
+            lista.insertar(r.getElem(), lista.longitud() + 1); // Add current element to the list
+        }
+    }
+
+    public Lista listarPorNiveles() {
+        Lista lista = new Lista();
+        if (this.raiz != null) {
+            Cola cola = new Cola();
+            cola.poner(this.raiz);
+
+            while (!cola.esVacia()) {
+                NodoGen actual = (NodoGen) cola.obtenerFrente();
+                cola.sacar();
+                lista.insertar(actual.getElem(), lista.longitud() + 1);
+
+                NodoGen hijo = actual.getHijoIzquierdo();
+                while (hijo != null) {
+                    cola.poner(hijo);
+                    hijo = hijo.getHermanoDerecho();
+                }
+            }
+        }
+        return lista;
     }
 
     public String toString()
@@ -265,4 +332,60 @@ public class ArbolGen {
         return s;
     }
 
+   public boolean sonFrontera(Lista unaLista) {
+        return sonFronteraAux(this.raiz, unaLista);
+    }
+
+    private boolean sonFronteraAux(NodoGen r, Lista unaLista) {
+        if (r == null) {
+            return true; // Empty tree has no frontier nodes
+        }
+        
+        if (r.getHijoIzquierdo() == null && r.getHermanoDerecho() == null) {
+            // Current node is a leaf node, check if it is present in the given list
+            int pos = unaLista.localizar(r.getElem());
+            if (pos != -1) {
+                unaLista.eliminar(pos);
+            } else {
+                return false; // Leaf node not found in the list
+            }
+        }
+
+        // Recursively check the frontier nodes of the subtree
+        return sonFronteraAux(r.getHijoIzquierdo(), unaLista) &&
+               sonFronteraAux(r.getHermanoDerecho(), unaLista);
+    }
+    public boolean sonFrontera1(Lista unaLista){
+        Lista lClon= unaLista.clone();
+        boolean verif;
+
+        verif= sonFronteraAux1(this.raiz, lClon);
+
+        return verif;
+
+    }
+    private boolean sonFronteraAux1(NodoGen n, Lista lClon){
+        boolean verif=false;
+        int pos;
+        if(lClon.esVacia()){
+            verif= true;
+        }else{ 
+
+            if(n!=null){
+
+                if(n.getHijoIzquierdo()== null){
+                    if(lClon.localizar(n.getElem())!= -1){
+                        pos= lClon.localizar(n.getElem());
+                        lClon.eliminar(pos);
+                    }
+
+                }
+                verif= sonFronteraAux1(n.getHijoIzquierdo(), lClon);
+                if(!verif){
+                    verif= sonFronteraAux1(n.getHermanoDerecho(), lClon);
+                }
+            }
+        }
+        return verif;
+    }
 }
