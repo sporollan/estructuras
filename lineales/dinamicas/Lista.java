@@ -143,4 +143,43 @@ public class Lista {
         return s + "]";
     }
 
+    public boolean cambiarPosicion(int pos1, int pos2)
+    {
+        int lg = this.longitud();
+        boolean exito = (lg >= pos1 && lg>=pos2);
+        Object elem;
+        if(exito)
+        {
+            Nodo previo;
+            Nodo p;
+            p = this.recorrer(pos1, cabecera);
+            previo = p;
+            p = p.getEnlace();
+            elem = p.getElem();
+            p = p.getEnlace();
+            previo.setEnlace(p);
+            pos2 = 1 + pos2 - pos1;
+            if(pos2 > 0)
+                p = this.recorrer(pos2, p);
+            else
+                p = this.recorrer(-1+pos2+pos1, cabecera);
+
+            previo = p;
+            p = p.getEnlace();
+            previo.setEnlace(new Nodo(elem, p));
+        }
+        return exito;
+    }
+
+    private Nodo recorrer(int pos, Nodo p)
+    {
+        int i = 0;
+        while(i<pos-2)
+        {
+            p = p.getEnlace();
+            i+=1;
+        }
+        return p;
+    }
+
 }
