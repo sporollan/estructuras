@@ -59,8 +59,7 @@ public class HeapMin
             {
                 p = (u-2) / 2;
             }
-
-            if((int)this.heap[p] > (int)this.heap[u])
+            if(((Comparable<Object>)this.heap[p]).compareTo(this.heap[u]) > 0)
             {
                 aux = (int)this.heap[p];
                 this.heap[p] = this.heap[u];
